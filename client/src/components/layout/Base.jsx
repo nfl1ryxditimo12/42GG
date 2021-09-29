@@ -33,7 +33,7 @@ const Base = ({ children }) => {
                             <img
                                 alt="home"
                                 src={
-                                    require("../images/logo.png")
+                                    require("../../images/logo.png")
                                         .default
                                 }
                             />
