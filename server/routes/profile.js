@@ -9,7 +9,7 @@ const Project = require("../models/userProject");
 const Campus = require("../models/campus");
 const User = require("../models/user");
 
-const tokenValid = require("../api/token");
+const getToken = require("../api/token");
 
 const korDate = (time) => {
     return new Date(Date.parse(time) + 25200000);
@@ -17,7 +17,7 @@ const korDate = (time) => {
 
 router
     .get("/:id/api", (req, res) => {
-        tokenValid().then(async (token) => {
+        getToken().then(async (token) => {
             const readEnv = {};
             res.send(token);
 
@@ -44,7 +44,7 @@ router
 
             // const campus = await axios({
             //     method: "get",
-            //     url: `${process.env.APIURL}/campus/seoul`,
+            //     url: `${process.env.API_URL}/campus/seoul`,
             //     headers: { Authorization: `Bearer ${token}` },
             // });
             // console.log(campus.data);
@@ -63,13 +63,13 @@ router
 
         if (process.env.CAMPUS_USERS - page >= 0.5) page++;
 
-        tokenValid(true).then(async (token) => {
+        getToken(true).then(async (token) => {
             let cnt = 1;
 
             for (let i = 1; i <= page; i++) {
                 const profiles = await axios({
                     method: "get",
-                    url: `${process.env.APIURL}/campus/${process.env.CAMPUS_ID}/users`,
+                    url: `${process.env.API_URL}/campus/${process.env.CAMPUS_ID}/users`,
                     headers: { Authorization: `Bearer ${token}` },
                     params: { page: i },
                 });
@@ -110,7 +110,7 @@ router
         const today = new Date();
         const time = today.getTime();
 
-        tokenValid().then(async (token) => {
+        getToken().then(async (token) => {
             const users = await User.findAll({});
 
             res.send("시작 시간: " + new Date());
@@ -120,7 +120,7 @@ router
                     console.log(`👉 ${users[i].dataValues.login} 👈`);
                     const profile = await axios({
                         method: "get",
-                        url: `${process.env.APIURL}/users/${users[i].dataValues.login}`,
+                        url: `${process.env.API_URL}/users/${users[i].dataValues.login}`,
                         headers: { Authorization: `Bearer ${token}` },
                     });
 
@@ -143,7 +143,7 @@ router
 
                         // const coalitions = await axios({
                         //     method: "get",
-                        //     url: `${process.env.APIURL}/users/${user}/coalitions_users`,
+                        //     url: `${process.env.API_URL}/users/${user}/coalitions_users`,
                         //     headers: { Authorization: `Bearer ${token}` },
                         // });
 
@@ -223,7 +223,7 @@ router
         });
     })
     .patch("/:id/update", (req, res) => {
-        tokenValid().then((token) => {});
+        getToken().then((token) => {});
     });
 
 module.exports = router;
