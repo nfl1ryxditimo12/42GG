@@ -19,27 +19,35 @@ module.exports = class Blackhole extends Sequelize.Model {
                     allowNull: false,
                 },
                 email: {
-                    type: Sequelize.STRING(255),
-                    allowNull: false,
-                },
-                correctionPoint: {
-                    type: Sequelize.INTEGER,
+                    type: Sequelize.STRING(100),
                     allowNull: false,
                 },
                 wallet: {
                     type: Sequelize.INTEGER,
                     allowNull: false,
                 },
+                correction_point: {
+                    type: Sequelize.INTEGER,
+                    allowNull: false,
+                },
+                pool: {
+                    type: Sequelize.JSON,
+                    allowNull: false,
+                },
+                cursus: {
+                    type: Sequelize.JSON,
+                    allowNull: false,
+                },
+                achievements: {
+                    type: Sequelize.JSON,
+                    allowNull: false,
+                },
                 coalition: {
-                    type: Sequelize.STRING(10),
-                    allowNull: false,
+                    type: Sequelize.JSON,
+                    allowNull: true,
                 },
-                coalitionScore: {
-                    type: Sequelize.INTEGER,
-                    allowNull: false,
-                },
-                coalitionRank: {
-                    type: Sequelize.INTEGER,
+                project: {
+                    type: Sequelize.JSON,
                     allowNull: false,
                 },
                 createdAt: {
@@ -47,10 +55,6 @@ module.exports = class Blackhole extends Sequelize.Model {
                     allowNull: false,
                 },
                 updatedAt: {
-                    type: Sequelize.DATE,
-                    allowNull: false,
-                },
-                blackholedAt: {
                     type: Sequelize.DATE,
                     allowNull: false,
                 },
@@ -62,14 +66,14 @@ module.exports = class Blackhole extends Sequelize.Model {
                 modelName: "Blackhole",
                 tableName: "blackholes",
                 paranoid: false,
-                charset: "utf8mb4",
-                collate: "utf8mb4_general_ci",
+                charset: "utf8",
+                collate: "utf8_general_ci",
             }
         );
     }
 
     static associate(db) {
-        db.Blackhole.hasMany(db.BlackProject, {
+        db.Blackhole.hasMany(db.UserProject, {
             foreignKey: "user_id",
             sourceKey: "id",
         });

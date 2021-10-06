@@ -8,7 +8,6 @@ exports = getToken = (status = false) => {
             const time = today.getTime();
             const tokenStat = await Token.findOne({});
             const tokenValue = tokenStat.dataValues;
-
             if (
                 tokenStat === null ||
                 tokenValue.createdAt + tokenValue.expiresIn - 200000 <= time ||

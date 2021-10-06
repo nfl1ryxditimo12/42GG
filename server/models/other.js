@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-module.exports = class Profile extends Sequelize.Model {
+module.exports = class Other extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
@@ -19,28 +19,32 @@ module.exports = class Profile extends Sequelize.Model {
                     allowNull: false,
                 },
                 email: {
-                    type: Sequelize.STRING(255),
-                    allowNull: false,
-                },
-                correctionPoint: {
-                    type: Sequelize.INTEGER,
+                    type: Sequelize.STRING(100),
                     allowNull: false,
                 },
                 wallet: {
                     type: Sequelize.INTEGER,
                     allowNull: false,
                 },
-                coalition: {
-                    type: Sequelize.STRING(10),
-                    allowNull: false,
-                },
-                coalitionScore: {
+                correction_point: {
                     type: Sequelize.INTEGER,
                     allowNull: false,
                 },
-                coalitionRank: {
-                    type: Sequelize.INTEGER,
+                pool: {
+                    type: Sequelize.JSON,
                     allowNull: false,
+                },
+                cursus: {
+                    type: Sequelize.JSON,
+                    allowNull: false,
+                },
+                achievement: {
+                    type: Sequelize.JSON,
+                    allowNull: false,
+                },
+                project: {
+                    type: Sequelize.JSON,
+                    allowNull: true,
                 },
                 createdAt: {
                     type: Sequelize.DATE,
@@ -50,28 +54,17 @@ module.exports = class Profile extends Sequelize.Model {
                     type: Sequelize.DATE,
                     allowNull: false,
                 },
-                blackholedAt: {
-                    type: Sequelize.DATE,
-                    allowNull: false,
-                },
             },
             {
                 sequelize,
                 timestamps: false,
                 underscored: false,
-                modelName: "Profile",
-                tableName: "profiles",
+                modelName: "Other",
+                tableName: "others",
                 paranoid: false,
-                charset: "utf8mb4",
-                collate: "utf8mb4_general_ci",
+                charset: "utf8",
+                collate: "utf8_general_ci",
             }
         );
-    }
-
-    static associate(db) {
-        db.Profile.hasMany(db.UserProject, {
-            foreignKey: "user_id",
-            sourceKey: "id",
-        });
     }
 };

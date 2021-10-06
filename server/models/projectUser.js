@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-module.exports = class Project extends Sequelize.Model {
+module.exports = class ProjectUser extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
@@ -13,12 +13,19 @@ module.exports = class Project extends Sequelize.Model {
                 sequelize,
                 timestamps: false,
                 underscored: false,
-                modelName: "Project",
-                tableName: "projects",
+                modelName: "ProjectUser",
+                tableName: "projectUsers",
                 paranoid: false,
                 charset: "utf8",
                 collate: "utf8_general_ci",
             }
         );
+    }
+
+    static associate(db) {
+        db.ProjectUser.belongsTo(db.Cadet, {
+            foreignKey: "user_id",
+            sourceKey: "id",
+        });
     }
 };

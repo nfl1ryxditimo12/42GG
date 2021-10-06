@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-module.exports = class Cadet extends Sequelize.Model {
+module.exports = class Pisciner extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
@@ -38,11 +38,11 @@ module.exports = class Cadet extends Sequelize.Model {
                     type: Sequelize.JSON,
                     allowNull: false,
                 },
-                achievements: {
+                achievement: {
                     type: Sequelize.JSON,
                     allowNull: false,
                 },
-                coalition: {
+                project: {
                     type: Sequelize.JSON,
                     allowNull: true,
                 },
@@ -59,19 +59,12 @@ module.exports = class Cadet extends Sequelize.Model {
                 sequelize,
                 timestamps: false,
                 underscored: false,
-                modelName: "Cadet",
-                tableName: "cadets",
+                modelName: "Pisciner",
+                tableName: "pisciners",
                 paranoid: false,
                 charset: "utf8",
                 collate: "utf8_general_ci",
             }
         );
-    }
-
-    static associate(db) {
-        db.Cadet.hasMany(db.ProjectUser, {
-            foreignKey: "user_id",
-            sourceKey: "id",
-        });
     }
 };
