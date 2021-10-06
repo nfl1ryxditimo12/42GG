@@ -1,13 +1,13 @@
 const axios = require("axios");
 const Token = require("../models/token");
 
-exports = getToken = (status = false) => {
+module.exports = getToken = (status = false) => {
     return new Promise(async (resolve, reject) => {
         try {
             const today = new Date();
             const time = today.getTime();
             const tokenStat = await Token.findOne({});
-            const tokenValue = tokenStat.dataValues;
+            const tokenValue = tokenStat !== null ? tokenStat.dataValues : null;
             if (
                 tokenStat === null ||
                 tokenValue.createdAt + tokenValue.expiresIn - 200000 <= time ||

@@ -1,7 +1,7 @@
 const axios = require("axios");
 const fs = require("fs");
 
-exports = getCampusInfo = async (token) => {
+module.exports = getCampusInfo = async (token) => {
     const readEnv = {};
 
     await axios({

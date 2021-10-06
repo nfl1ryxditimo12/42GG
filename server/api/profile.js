@@ -6,7 +6,7 @@ require("dotenv").config();
 const User = require("../models/user");
 const Test = require("../models/test");
 
-exports = getProfile = () => {
+module.exports = getProfile = () => {
     let total = 0;
     let error = 0;
     const errUser = {
