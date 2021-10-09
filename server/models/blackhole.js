@@ -50,11 +50,15 @@ module.exports = class Blackhole extends Sequelize.Model {
                     type: Sequelize.JSON,
                     allowNull: false,
                 },
-                createdAt: {
+                created_at: {
                     type: Sequelize.DATE,
                     allowNull: false,
                 },
-                updatedAt: {
+                updated_at: {
+                    type: Sequelize.DATE,
+                    allowNull: false,
+                },
+                anonymize_date: {
                     type: Sequelize.DATE,
                     allowNull: false,
                 },

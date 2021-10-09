@@ -56,15 +56,19 @@ const createUser = async (data) => {
                         level: data.cursus_users[1].level,
                         skills: data.cursus_users[1].skills,
                         begin_at: data.cursus_users[1].begin_at,
-                        blackholed_at: data.cursus_users[0].blackholed_at,
+                        blackholed_at: data.cursus_users[1].blackholed_at,
                     },
                 },
                 achievements: data.achievements,
                 coalition: null,
                 project: data.projects_users,
-                createdAt: data.created_at,
-                updatedAt: data.updated_at,
-            }).then(() => (userStatus = "Blackhole"));
+                created_at: data.created_at,
+                updated_at: data.updated_at,
+                anonymize_date: data.anonymize_date,
+            }).then(() => {
+                userStatus = "Blackhole";
+                console.log("🌀 \x1b[34mThis user have been absorbed by the Black Hole.\x1b[0m");
+            });
         } else {
             await Cadet.create({
                 id: data.id,
@@ -90,14 +94,18 @@ const createUser = async (data) => {
                         level: data.cursus_users[1].level,
                         skills: data.cursus_users[1].skills,
                         begin_at: data.cursus_users[1].begin_at,
-                        blackholed_at: data.cursus_users[0].blackholed_at,
+                        blackholed_at: data.cursus_users[1].blackholed_at,
                     },
                 },
                 achievements: data.achievements,
                 coalition: null,
-                createdAt: data.created_at,
-                updatedAt: data.updated_at,
-            }).then(() => (userStatus = "Cadet"));
+                created_at: data.created_at,
+                updated_at: data.updated_at,
+                anonymize_date: data.anonymize_date,
+            }).then(() => {
+                userStatus = "Cadet";
+                console.log("🧑‍💻 \x1b[32mThis user Cadet !!\x1b[0m");
+            });
         }
     } else {
         await Other.create({
@@ -122,17 +130,27 @@ const createUser = async (data) => {
             },
             achievement: data.achievements,
             project: data.projects_users,
-            createdAt: data.created_at,
-            updatedAt: data.updated_at,
-        }).then(() => (userStatus = "Other"));
+            created_at: data.created_at,
+            updated_at: data.updated_at,
+            anonymize_date: data.anonymize_date,
+        }).then(() => {
+            userStatus = "Other";
+            console.log("👀 \x1b[35mThis user is not Cadet.\x1b[0m");
+        });
     }
 
-    await UserList.update(
-        { status: userStatus },
-        {
-            where: { login: data.login },
+    await UserList.findOne({
+        where: { login: data.login },
+    }).then(async (value) => {
+        if (value.dataValues.status === null) {
+            await UserList.update(
+                { status: userStatus },
+                {
+                    where: { login: data.login },
+                }
+            );
         }
-    );
+    });
 };
 
 router

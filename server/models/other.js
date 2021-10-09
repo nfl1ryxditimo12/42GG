@@ -46,11 +46,15 @@ module.exports = class Other extends Sequelize.Model {
                     type: Sequelize.JSON,
                     allowNull: true,
                 },
-                createdAt: {
+                created_at: {
                     type: Sequelize.DATE,
                     allowNull: false,
                 },
-                updatedAt: {
+                updated_at: {
+                    type: Sequelize.DATE,
+                    allowNull: false,
+                },
+                anonymize_date: {
                     type: Sequelize.DATE,
                     allowNull: false,
                 },
