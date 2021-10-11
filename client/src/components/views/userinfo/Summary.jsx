@@ -1,9 +1,12 @@
 import React from 'react';
+import { CardStyle } from '../ProfileStyle';
 
 const Summary = ({ id, user }) => {
     console.log(id, user);
     return (
-        <div>Summary Page</div>
+        <CardStyle>
+            Summary Page
+        </CardStyle>
     );
 }
 

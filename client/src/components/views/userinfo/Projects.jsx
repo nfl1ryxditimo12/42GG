@@ -1,9 +1,12 @@
 import React from 'react';
+import { CardStyle } from '../ProfileStyle';
 
 const Projects = ({ id, user }) => {
     console.log(id, user);
     return (
-        <div>Projects Page</div>
+        <CardStyle>
+            Project Page
+        </CardStyle>
     );
 }
 
