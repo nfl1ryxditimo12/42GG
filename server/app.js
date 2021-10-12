@@ -5,8 +5,6 @@ const { sequelize } = require("./models");
 
 const app = express();
 
-const main = require("./routes/main");
-const profile = require("./routes/profile");
 const test = require("./routes/test");
 
 const corsOptions = {
@@ -27,7 +25,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/v0/profile", profile);
 app.use("/v0/test", test);
 
 const port = 5000;

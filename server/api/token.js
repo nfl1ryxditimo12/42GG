@@ -1,48 +1,64 @@
 const axios = require("axios");
 const Token = require("../models/token");
 
-module.exports = tokenValid = (status = false) => {
+module.exports = getToken = (status = false) => {
     return new Promise(async (resolve, reject) => {
-        const today = new Date();
-        const time = today.getTime();
-        let users = await Token.findOne({});
-
-        if (
-            users === null ||
-            users.createdAt + users.expiresIn - 200000 <= time ||
-            status === true
-        ) {
-            const token = await axios({
-                method: "post",
-                url: process.env.TOKENURL,
-                params: {
-                    grant_type: "client_credentials",
-                    client_id: process.env.UID,
-                    client_secret: process.env.SECRET,
-                },
-            });
-            console.log("created " + parseInt(token.data.created_at) * 1000);
-            console.log("nowtime " + time);
-            if (users === null && status === false) {
-                await Token.create({
-                    accessToken: token.data.access_token,
-                    expiresIn: parseInt(token.data.expires_in) * 1000,
-                    createdAt: parseInt(token.data.created_at) * 1000,
+        try {
+            const today = new Date();
+            const time = today.getTime();
+            const tokenStat = await Token.findOne({});
+            const tokenValue = tokenStat !== null ? tokenStat.dataValues : null;
+            if (
+                tokenStat === null ||
+                tokenValue.createdAt + tokenValue.expiresIn - 200000 <= time ||
+                status === true
+            ) {
+                const token = await axios({
+                    method: "post",
+                    url: process.env.TOKEN_URL,
+                    params: {
+                        grant_type: "client_credentials",
+                        client_id: process.env.UID,
+                        client_secret: process.env.SECRET,
+                    },
                 });
-            } else {
-                await Token.update(
-                    {
+
+                if (tokenValue === null && status === false) {
+                    await Token.create({
                         accessToken: token.data.access_token,
                         expiresIn: parseInt(token.data.expires_in) * 1000,
                         createdAt: parseInt(token.data.created_at) * 1000,
-                    },
-                    {
-                        where: { id: 1 },
-                    }
+                    }).then(() => console.log("\x1b[31m토큰이 생성되었습니다.\x1b[m"));
+                } else {
+                    await Token.update(
+                        {
+                            accessToken: token.data.access_token,
+                            expiresIn: parseInt(token.data.expires_in) * 1000,
+                            createdAt: parseInt(token.data.created_at) * 1000,
+                        },
+                        {
+                            where: { id: 1 },
+                        }
+                    ).then(() => console.log("\x1b[31m토큰 정보가 업데이트 되었습니다.\x1b[m"));
+                }
+            } else {
+                const leftToken =
+                    tokenValue.createdAt + tokenValue.expiresIn - Date.parse(new Date());
+                console.log(
+                    `토큰 소멸까지 \x1b[31m${
+                        leftToken / 1000 / 60 / 60 >= 1
+                            ? `${parseInt(leftToken / 1000 / 60 / 60) % 60}시간 `
+                            : ""
+                    }${parseInt(leftToken / 1000 / 60) % 60}분 ${
+                        parseInt(leftToken / 1000) % 60
+                    }초\x1b[0m 남았습니다.`
                 );
             }
+            const tokenAfterStatus = await Token.findOne({});
+            resolve(tokenAfterStatus.accessToken);
+        } catch (err) {
+            console.log(err);
+            console.log("\x1b[31m[Token] - 42API 토큰 발행에 실패하였습니다.\x1b[m");
         }
-        users = await Token.findOne({});
-        resolve(users.accessToken);
     });
 };

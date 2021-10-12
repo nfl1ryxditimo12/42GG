@@ -1,15 +1,10 @@
 const Sequelize = require("sequelize");
 
-module.exports = class Test extends Sequelize.Model {
+module.exports = class Achievement extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-                id: {
-                    type: Sequelize.INTEGER,
-                    primaryKey: true,
-                    allowNull: false,
-                },
-                data: {
+                achivement: {
                     type: Sequelize.JSON,
                     allowNull: false,
                 },
@@ -18,11 +13,11 @@ module.exports = class Test extends Sequelize.Model {
                 sequelize,
                 timestamps: false,
                 underscored: false,
-                modelName: "Test",
-                tableName: "tests",
+                modelName: "Achivement",
+                tableName: "achivements",
                 paranoid: false,
-                charset: "utf8mb4",
-                collate: "utf8mb4_general_ci",
+                charset: "utf8",
+                collate: "utf8_general_ci",
             }
         );
     }

@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-module.exports = class Campus extends Sequelize.Model {
+module.exports = class Dummy extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
@@ -9,8 +9,8 @@ module.exports = class Campus extends Sequelize.Model {
                     primaryKey: true,
                     allowNull: false,
                 },
-                userCount: {
-                    type: Sequelize.INTEGER,
+                data: {
+                    type: Sequelize.JSON,
                     allowNull: false,
                 },
             },
@@ -18,8 +18,8 @@ module.exports = class Campus extends Sequelize.Model {
                 sequelize,
                 timestamps: false,
                 underscored: false,
-                modelName: "Campus",
-                tableName: "campus",
+                modelName: "Dummy",
+                tableName: "dummys",
                 paranoid: false,
                 charset: "utf8mb4",
                 collate: "utf8mb4_general_ci",
