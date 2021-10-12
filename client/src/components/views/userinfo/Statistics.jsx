@@ -1,9 +1,12 @@
 import React from 'react';
+import { CardStyle } from '../ProfileStyle';
 
 const Statistics = ({ id, user }) => {
     console.log(id, user);
     return (
-        <div>Statistics Page</div>
+        <CardStyle>
+            <div>Statistics Page</div>
+        </CardStyle>
     );
 }
 

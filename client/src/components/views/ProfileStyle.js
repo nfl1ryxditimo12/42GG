@@ -25,3 +25,11 @@ export const ButtonStyle = styled.div`
         }
     }
 `;
+
+export const CardStyle = styled.div`
+    margin: 0.4rem;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 0.4rem;
+    background-color: rgba(156, 163, 175, 0.2);
+`;
