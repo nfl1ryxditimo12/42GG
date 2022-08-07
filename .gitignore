@@ -1,6 +1,5 @@
 # dependencies
 */node_modules
-*/package-lock.json
 
 # testing
 */coverage
@@ -11,8 +10,6 @@
 # misc
 */.DS_Store
 */.env
-*/.env copy
-*/.env1
 */.env.local
 */.env.development.local
 */.env.test.local
